@@ -13,24 +13,11 @@ def initialize_database():#Creates a database for app
     connection = sqlite3.connect(os.path.join(CURRENT_PATH, DATABASE_FILE))
     cursor = connection.cursor()
 
-    # Check if the table exists
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='website_status'")
-    table_exists = cursor.fetchone()
+    # Create table if its not there
+    cursor.execute('''CREATE TABLE IF NOT EXISTS website_status (id INTEGER PRIMARY KEY AUTOINCREMENT,time TEXT,date TEXT,website TEXT,
+                   availability_status TEXT,status_code INTEGER)''')
 
-    if not table_exists:
-        # Create the table if it doesn't exist
-        cursor.execute('''
-            CREATE TABLE website_status (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                time TEXT,
-                date TEXT,
-                website TEXT,
-                availability_status TEXT,
-                status_code INTEGER
-            )
-        ''')
-
-        connection.commit()
+    connection.commit()
 
     connection.close()
 
