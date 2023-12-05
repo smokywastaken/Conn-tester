@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import MagicMock
-from connection_tester import initialize_database, insert_into_database
+from connection_tester import initialize_database
 
 class TestWebsiteChecker(unittest.TestCase):
 
