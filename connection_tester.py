@@ -9,7 +9,7 @@ CURRENT_PATH =os.path.dirname(os.path.abspath(__file__))
 CONFIG_FILE = os.path.join(CURRENT_PATH, "config.ini")
 DATABASE_FILE= os.path.join(CURRENT_PATH, "website_checker.db")
 
-def initialize_database():#
+def initialize_database():#Creates a database for app
     connection = sqlite3.connect(os.path.join(CURRENT_PATH, DATABASE_FILE))
     cursor = connection.cursor()
 
