@@ -83,6 +83,8 @@ def read_config(file_path=CONFIG_FILE):
     try:
         config.read(file_path)
         websites =config["WEBSITES"]
+        for site in websites:
+            site=site.strip
         return websites
     except KeyError:
         logging.error(f"[{current_datetime}]Config file {file_path} is empty or missing 'WEBSITES' section.")
