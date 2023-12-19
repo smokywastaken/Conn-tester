@@ -3,13 +3,18 @@ import requests
 import configparser
 import logging
 import sqlite3
+import shutil
 from datetime import datetime
 
 CURRENT_PATH =os.path.dirname(os.path.abspath(__file__))
 CONFIG_FILE = os.path.join(CURRENT_PATH, "config.ini")
 DATABASE_FILE= os.path.join(CURRENT_PATH, "website_checker.db")
 
-def initialize_database():#Creates a database for app
+def initialize():#Creates all required files for operation     
+    shutil.copy ("templates/"+CONFIG_FILE, CURRENT_PATH)
+    shutil.copy ("templates/"+DATABASE_FILE, CURRENT_PATH)
+    shutil.copy ("templates/migrate_db.py", CURRENT_PATH)
+    shutil.copy ("templates/tester.py", CURRENT_PATH)
     connection = sqlite3.connect(os.path.join(CURRENT_PATH, DATABASE_FILE))
     cursor = connection.cursor()
 
@@ -97,9 +102,9 @@ if __name__ == "__main__":
     # Configure logging to write to a file
     logging.basicConfig(filename=os.path.join(CURRENT_PATH, 'website_checker.log'), level=logging.ERROR)
 
-    # Initialize the database
-    initialize_database()
-
+    #Create necessary files for operation, testing and migrating
+    if os.path.exists(CONFIG_FILE) or os.path.exists(DATABASE_FILE) is False:
+        initialize()
 
     websites_to_check = read_config(CONFIG_FILE)
     
